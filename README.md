@@ -49,3 +49,11 @@
 
 - **Search Functionality:**
   - Search tasks by title or description.
+
+  ## Live Demo
+
+  Check out the live demo of the project [here](https://task-manager-te5h.vercel.app).
+
+  **Demo Account:**
+  - **Email:** demo@gmail.com
+  - **Password:** 1234

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -42,7 +42,8 @@ export function SignupForm() {
         title: "Account created successfully",
       });
       router.push("/");
-    } catch {
+    } catch (error: unknown) {
+      console.error(error);
       toast({
         title: "Failed to create account",
         variant: "destructive",

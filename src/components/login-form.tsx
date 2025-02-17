@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link"
-import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -14,7 +15,7 @@ import { Label } from "@/components/ui/label"
 
 import { useToast } from "@/hooks/use-toast";
 import { login } from "@/server/actions/auth";
-import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils"
 
 export function LoginForm({
   className,
@@ -33,7 +34,8 @@ export function LoginForm({
         title: "Login successful",
       });
       router.push("/");
-    } catch {
+    } catch (error: unknown) {
+      console.error(error);
       toast({
         title: "Login failed",
         variant: "destructive",
