@@ -1,16 +1,22 @@
 "use client";
 import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+
 import { useToast } from "@/hooks/use-toast";
+
 import { createAccount } from "@/server/actions/auth";
-import Link from "next/link";
+
+import { cn } from "@/lib/utils";
 
 
 export function SignupForm() {
   const { toast } = useToast();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,6 +41,7 @@ export function SignupForm() {
       toast({
         title: "Account created successfully",
       });
+      router.push("/");
     } catch {
       toast({
         title: "Failed to create account",
