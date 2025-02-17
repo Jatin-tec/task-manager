@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   experimental: {
     serverActions: {
-      allowedOrigins: ["task-manager-te5h.vercel.app", "localhost:3000"],
+      allowedOrigins: ["task-manager-alpha-orpin.vercel.app", "localhost:3000"],
     },
   },
 };
