@@ -104,12 +104,12 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({
           placeholder="Task Description"
           className="w-full p-2 border rounded-lg mb-4"
         />
-        <label className="block text-sm">Due Date</label>
+        <label className="w-full p-2 border rounded-lg mb-4">Due Date</label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant={"outline"}
-              className={"w-[240px] pl-3 text-left font-normal"}
+              className={"w-[240px] pl-3 text-left font-normal mx-4"}
             >
               {dueDate ? (format(dueDate, "PPP")) : (
                 <span>Pick a date</span>
@@ -127,7 +127,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({
             />
           </PopoverContent>
         </Popover>
-        <div className="flex justify-start space-x-2">
+        <div className="flex justify-start space-x-2 my-4">
           <button
             onClick={handleUpdateTask}
             className="px-4 py-2 bg-black text-white rounded-lg"

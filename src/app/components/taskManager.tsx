@@ -1,9 +1,16 @@
 "use client";
 import React, { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
+
 import TaskList from "@/components/TaskList";
 import AddTaskModal from "@/components/AddTaskDialog";
 import EditTaskModal from "@/components/EditTaskDialog";
+
 import { Task } from "@prisma/client";
+
+import { logout as clearSession } from "@/server/actions/auth";
+import { LogOut, LogOutIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface TaskManagerProps {
   session: any;
@@ -18,6 +25,7 @@ export const TaskManager: React.FC<TaskManagerProps> = ({ session, tasks }) => {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
+  const router  = useRouter();
 
   const handleTaskEdit = (task: any) => {
     setEditingTask(task);
@@ -27,13 +35,13 @@ export const TaskManager: React.FC<TaskManagerProps> = ({ session, tasks }) => {
   const filteredAndSortedTasks = useMemo(() => {
     const filtered = tasks.filter((task) => {
       const matchesSearch =
-      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (task.description &&
-        task.description.toLowerCase().includes(searchQuery.toLowerCase()));
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (task.description &&
+          task.description.toLowerCase().includes(searchQuery.toLowerCase()));
       const matchesStatus =
-      selectedStatus === "all" ||
-      (selectedStatus === "completed" && task.completed) ||
-      (selectedStatus === "pending" && !task.completed);
+        selectedStatus === "all" ||
+        (selectedStatus === "completed" && task.completed) ||
+        (selectedStatus === "pending" && !task.completed);
       return matchesSearch && matchesStatus;
     });
 
@@ -51,13 +59,19 @@ export const TaskManager: React.FC<TaskManagerProps> = ({ session, tasks }) => {
   }, []);
 
 
+  const logout = async () => {
+    await clearSession();
+    router.push("/login");
+  };
+
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-200 to-gray-50">
       <div className="max-w-lg mx-auto overflow-hidden">
         <h1 className="font-extrabold bg-white text-black text-2xl px-4 py-2">
           Tasks
         </h1>
-        <header className="flex justify-center items-center bg-white rounded-br-3xl rounded-bl-3xl shadow-xl shadow-gray-200 p-4 mb-6">
+        <header className="flex flex-col sm:flex-row justify-between items-center bg-white rounded-br-3xl rounded-bl-3xl shadow-xl shadow-gray-200 p-4 mb-6 gap-4">
           <input
             type="text"
             placeholder="Search tasks..."
@@ -65,7 +79,7 @@ export const TaskManager: React.FC<TaskManagerProps> = ({ session, tasks }) => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full sm:max-w-xs px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
           />
-          <div className="flex gap-4 flex-wrap">
+          <div className="flex gap-4 flex-wrap justify-center sm:justify-end w-full sm:w-auto">
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
@@ -83,9 +97,19 @@ export const TaskManager: React.FC<TaskManagerProps> = ({ session, tasks }) => {
               onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
               className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             >
-                <option value="asc">Due First</option>
-                <option value="desc">Due Last</option>
+              <option value="asc">Due First</option>
+              <option value="desc">Due Last</option>
             </select>
+
+            <Button
+              onClick={logout}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-black hover:bg-red-600 relative group"
+            >
+              <LogOutIcon size={16} />
+              <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              Logout
+              </span>
+            </Button>
           </div>
         </header>
 

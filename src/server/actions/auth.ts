@@ -4,6 +4,7 @@ import prisma from '../db/prisma';
 import { User } from '@prisma/client';
 import passwordHash from 'password-hash';
 import { encrypt, decrypt } from '@/utils/auth';
+import { redirect } from 'next/navigation';
 
 export const createAccount = async (user: User) => {
     await prisma.user.create({
@@ -59,4 +60,14 @@ export const login = async (email: string, password: string) => {
         expires
     });
     return user;
+};
+
+export const logout = async () => {
+    const cookieStore = await cookies();
+    cookieStore.set({
+        name: "session",
+        value: "",
+        expires: 0,
+    });
+    redirect("/login");
 };
