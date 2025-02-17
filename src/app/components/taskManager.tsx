@@ -9,7 +9,7 @@ import EditTaskModal from "@/components/EditTaskDialog";
 import { Task } from "@prisma/client";
 
 import { logout as clearSession } from "@/server/actions/auth";
-import { LogOut, LogOutIcon } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface TaskManagerProps {
