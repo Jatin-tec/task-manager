@@ -2,6 +2,7 @@ import React from "react";
 import { Task } from "@prisma/client";
 import { toggleTask as toggleTaskServer } from "@/server/actions/todo";
 import { useToast } from "@/hooks/use-toast";
+import { PenIcon } from "lucide-react";
 
 export interface ITestState {
   listItems: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -35,7 +36,7 @@ const TaskList: React.FC<TaskListProps> = ({ onTaskEdit, taskList }) => {
         taskList.map((task: Task) => (
           <div
             key={task.id}
-            className="flex items-center justify-between bg-white p-4 rounded-xl shadow-lg shadow-gray-200 text-black hover:bg-gray-50 transition-colors"
+            className="group flex items-center justify-between bg-white p-4 rounded-xl shadow-lg shadow-gray-200 text-black hover:bg-gray-100/60 transition-colors"
           >
             <div className="flex items-start space-x-4  flex-1">
               <div className="inline-flex items-center">
@@ -66,7 +67,7 @@ const TaskList: React.FC<TaskListProps> = ({ onTaskEdit, taskList }) => {
                 </label>
               </div>
               <div
-                className="grid items-start flex-1 cursor-pointer hover:bg-gray-100 rounded-lg p-2 transition-colors"
+                className="grid items-start flex-1 cursor-pointer rounded-lg px-2"
                 onClick={() => onTaskEdit(task)}
               >
                 <p
@@ -80,24 +81,11 @@ const TaskList: React.FC<TaskListProps> = ({ onTaskEdit, taskList }) => {
                 >
                   {task.description}
                 </p>
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity ml-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-pencil h-5 w-5 text-gray-400"
-                  >
-                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                    <path d="m15 5 4 4" />
-                  </svg>
-                </span>
+                
               </div>
+              <span className="opacity-0 cursor-pointer group-hover:opacity-100 transition-opacity ml-4">
+                  <PenIcon className="h-4 w-4" />
+                </span>
             </div>
           </div>
         ))
